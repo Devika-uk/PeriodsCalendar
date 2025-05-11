@@ -12,8 +12,10 @@ const MainPage = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-       
         <ScrollView showsVerticalScrollIndicator={false}>
+          {/* App Name at the Top */}
+          <Text style={styles.appName}>Me</Text>
+
           <View style={styles.summaryContainer}>
             <Text style={styles.summaryTitle}>Cycle Summary</Text>
             <View style={styles.summaryRow}>
@@ -35,7 +37,7 @@ const MainPage = () => {
           <Text style={styles.monthLabel}>May 2025</Text>
           <Calendar />
 
-          <View style={styles.chartContainer}>
+          {/* <View style={styles.chartContainer}>
             <Text style={styles.chartTitle}>Cycle Prediction</Text>
             <LineChart
               data={{
@@ -73,7 +75,7 @@ const MainPage = () => {
                 borderRadius: 16,
               }}
             />
-          </View>
+          </View> */}
 
           <Legend />
 
@@ -98,6 +100,13 @@ const MainPage = () => {
               </TouchableOpacity>
             </View>
           </View>
+
+          {/* Developer Details at the Bottom */}
+          <View style={styles.developerContainer}>
+            <Text style={styles.developerTitle}>Developed by:</Text>
+            <Text style={styles.developerName}>Devika</Text>
+            <Text style={styles.developerName}>Anjali</Text>
+          </View>
         </ScrollView>
 
         <TouchableOpacity style={styles.fab}>
@@ -117,6 +126,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     position: 'relative',
+  },
+  appName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#4B0082',
+    textAlign: 'center',
+    marginVertical: 16,
   },
   summaryContainer: {
     backgroundColor: '#fff',
@@ -212,12 +228,27 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 60,
     right: 20,
     backgroundColor: '#D72638',
     borderRadius: 30,
     padding: 16,
     elevation: 5,
+  },
+  developerContainer: {
+    marginVertical: 20,
+    alignItems: 'center',
+    bottom: 30,
+  },
+  developerTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#4B0082',
+    marginBottom: 8,
+  },
+  developerName: {
+    fontSize: 16,
+    color: '#4B0082',
   },
 });
 

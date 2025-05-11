@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Period Calendar",
-    "slug": "Period Calendar",
+    "slug": "period-calendar",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.sojan.periodcalendar"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "990cd9de-e83d-445c-98e2-add484aa8a95"
+      }
     }
   }
 }

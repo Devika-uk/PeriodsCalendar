@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 
-// Pregnancy guidance data array with monthly information
+// Assuming you have an image in your assets folder
+const headerImage = require('../../assets/images/background.jpg');
+
 const pregnancyGuidanceData = [
   {
     id: '1',
@@ -287,13 +287,18 @@ const pregnancyGuidanceData = [
   }
 ];
 
+
 export default function PregnancyGuidanceScreen() {
-  const navigation = useNavigation();
+  const [expandedCard, setExpandedCard] = useState(null);
+
+  const toggleCardExpansion = (id) => {
+    setExpandedCard(expandedCard === id ? null : id);
+  };
 
   const renderMonthCard = ({ item }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[styles.card, { backgroundColor: item.cardColor }]}
-      onPress={() => navigation.navigate('MonthGuidance', { monthData: item })}
+      onPress={() => toggleCardExpansion(item.id)}
     >
       <ThemedView style={styles.cardContent}>
         <ThemedView style={styles.cardHeader}>
@@ -301,7 +306,41 @@ export default function PregnancyGuidanceScreen() {
           <ThemedText type="subtitle" style={styles.monthTitle}>{item.title}</ThemedText>
         </ThemedView>
         <ThemedText style={styles.description}>{item.description}</ThemedText>
-        <ThemedText style={styles.tapToView}>Tap to view guidance</ThemedText>
+
+        {expandedCard === item.id && (
+          <ThemedView style={styles.expandedContent}>
+            <ThemedView style={styles.section}>
+              <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>Guidance</ThemedText>
+              {item.guidance.map((tip, index) => (
+                <ThemedText key={`guidance-${index}`} style={styles.listItem}>
+                  • {tip}
+                </ThemedText>
+              ))}
+            </ThemedView>
+
+            <ThemedView style={styles.section}>
+              <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>Common Symptoms</ThemedText>
+              {item.symptoms.map((symptom, index) => (
+                <ThemedText key={`symptom-${index}`} style={styles.listItem}>
+                  • {symptom}
+                </ThemedText>
+              ))}
+            </ThemedView>
+
+            <ThemedView style={styles.section}>
+              <ThemedText type="defaultSemiBold" style={styles.sectionTitle}>Nutrition Tips</ThemedText>
+              {item.foodTips.map((tip, index) => (
+                <ThemedText key={`food-${index}`} style={styles.listItem}>
+                  • {tip}
+                </ThemedText>
+              ))}
+            </ThemedView>
+          </ThemedView>
+        )}
+
+        <ThemedText style={styles.tapToView}>
+          {expandedCard === item.id ? 'Tap to collapse' : 'Tap to view guidance'}
+        </ThemedText>
       </ThemedView>
     </TouchableOpacity>
   );
@@ -310,21 +349,12 @@ export default function PregnancyGuidanceScreen() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#FFF0F5', dark: '#353636' }}
       headerImage={
-        <IconSymbol
-          size={210}
-          color="#FF69B4"
-          name="heart.circle.fill"
+        <Image
+          source={headerImage}
           style={styles.headerImage}
+          resizeMode="contain"
         />
       }
-      scrollComponent={FlatList}
-      scrollComponentProps={{
-        data: pregnancyGuidanceData,
-        renderItem: renderMonthCard,
-        keyExtractor: item => item.id,
-        contentContainerStyle: styles.flatListContent,
-        showsVerticalScrollIndicator: false
-      }}
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Pregnancy Guidance</ThemedText>
@@ -332,16 +362,26 @@ export default function PregnancyGuidanceScreen() {
       <ThemedText style={styles.subtitle}>
         Month-by-month guidance for your pregnancy journey
       </ThemedText>
+
+      <FlatList
+        data={pregnancyGuidanceData}
+        renderItem={renderMonthCard}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.flatListContent}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+      />
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    bottom: -60,
-    right: -25,
-    position: 'absolute',
-  },
+headerImage: {
+  width: '100%', // Ensure the image spans the full width
+  height: '100%', // Ensure the image spans the full height
+  position: 'absolute',
+  resizeMode: 'cover', // Use 'cover' to ensure the image covers the area without distortion
+},
   titleContainer: {
     flexDirection: 'row',
     gap: 8,
@@ -397,5 +437,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontStyle: 'italic',
     alignSelf: 'flex-end',
+    marginTop: 8,
+  },
+  expandedContent: {
+    marginTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.1)',
+    paddingTop: 12,
+  },
+  section: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    marginBottom: 8,
+    textDecorationLine: 'underline',
+  },
+  listItem: {
+    fontSize: 14,
+    marginLeft: 8,
+    marginBottom: 4,
   },
 });

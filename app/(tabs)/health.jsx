@@ -1,57 +1,63 @@
-import { Image, StyleSheet, Platform, Text } from 'react-native';
-
+import React, { useState } from 'react';
+import { Image, StyleSheet, View, Linking, Text, TouchableOpacity } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
-  const name = 'Vishnu MM';
+  // Static health updates
+  const healthUpdates = [
+    "Update 1: Regular exercise can improve your mental health.",
+    "Update 2: Eating a balanced diet is crucial for maintaining health.",
+    "Update 3: Adequate sleep is essential for overall well-being.",
+  ];
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('../../assets/images/health.jpg')}
+          style={styles.backgroundImage}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.titleContainer}>
-      <ThemedText type="title">Welcome Dear { name }</ThemedText>
+        <ThemedText type="title">Health Updates</ThemedText>
         <HelloWave />
       </ThemedView>
-      <Text>Calendar</Text>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+
+      {/* YouTube Video */}
+      <View style={styles.videoContainer}>
+        <Text style={styles.sectionTitle}>Health Video</Text>
+        <WebView
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          source={{ uri: 'https://www.youtube.com/embed/fRlw5QMbE74' }} // Replace with a real YouTube video ID
+          style={styles.video}
+        />
+      </View>
+
+      {/* Research Articles */}
+      <View style={styles.articleContainer}>
+        <Text style={styles.sectionTitle}>Research Articles</Text>
+        <TouchableOpacity onPress={() => Linking.openURL('https://www.bmj.com/research/research')}>
+          <Text style={styles.articleLink}>Research Article 1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Linking.openURL('https://www.baycrest.org/Baycrest_Centre/media/content/101_HealthTips.pdf')}>
+          <Text style={styles.articleLink}>Research Article 2</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Health Updates */}
+      <View style={styles.updatesContainer}>
+        <Text style={styles.sectionTitle}>Health Updates</Text>
+        {healthUpdates.map((update, index) => (
+          <Text key={index} style={styles.updateText}>{update}</Text>
+        ))}
+      </View>
     </ParallaxScrollView>
   );
 }
@@ -66,11 +72,36 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
+  backgroundImage: {
+    height: '100%',
+    width: '100%',
     bottom: 0,
-    left: 0,
     position: 'absolute',
+    left: 0,
+    resizeMode:'cover',
+  },
+  videoContainer: {
+    marginTop: 20,
+  },
+  video: {
+    height: 200,
+  },
+  articleContainer: {
+    marginTop: 20,
+  },
+  updatesContainer: {
+    marginTop: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  articleLink: {
+    color: 'blue',
+    marginBottom: 5,
+  },
+  updateText: {
+    marginBottom: 5,
   },
 });

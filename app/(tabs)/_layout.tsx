@@ -15,8 +15,10 @@ import {
 
 import Calendar from "./calendar";
 import Health from "./health";
-import Test from "./PregnancyGuidanceScreen";
+import PregnancyGuidanceScreen from "./PregnancyGuidanceScreen";
+import MonthGuidance from './MonthGuidanceScreen'
 import Profile from "./profile";
+import MindRelax from "./MindRelax";
 
 const Tabs = createBottomTabNavigator();
 
@@ -54,19 +56,10 @@ const screenOptions: BottomTabNavigationOptions = {
             ),
           }}
         />
-        <Tabs.Screen
-          name="test"
-          component={Test}
-          options={{
-            title: "Test",
-            tabBarIcon: ({ color }) => (
-              <Ionicons name="flask-outline" size={28} color={color} />
-            ),
-          }}
-        />
+        
         <Tabs.Screen
           name="pregnency"
-          component={Test}
+          component={PregnancyGuidanceScreen}
           options={{
             title: "Pregnency",
             tabBarIcon: ({ color }) => (
@@ -78,6 +71,29 @@ const screenOptions: BottomTabNavigationOptions = {
             ),
           }}
         />
+
+
+{/* 
+<Tabs.Screen
+  name="MonthGuidance"
+  component={MonthGuidance}
+  options={{
+    title: "", // Empty title
+    tabBarIcon: ({ color }) => (
+      <MaterialCommunityIcons
+        name="human-pregnant"
+        size={1}
+        color="transparent" // Transparent color
+      />
+    ),
+    tabBarButton: () => null, // Disable the tab button
+  }}
+/>
+
+ */}
+
+
+
         <Tabs.Screen
           name="health"
           component={Health}
@@ -90,7 +106,7 @@ const screenOptions: BottomTabNavigationOptions = {
         />
         <Tabs.Screen
           name="mind"
-          component={Test}
+          component={MindRelax}
           options={{
             title: "MindRelax",
             tabBarIcon: ({ color }) => (
