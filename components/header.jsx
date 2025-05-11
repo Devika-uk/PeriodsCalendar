@@ -11,9 +11,8 @@ const formattedDate = today.toDateString(); // Example: "Thu Apr 17 2025"
 const Header = ({ username = "devuuu",}) => {
 
   const navigation = useNavigation();
-
-  const handleImagePress = () => {
-    navigation.navigate('pages/profile');
+ const handleImagePress = () => {
+    navigation.navigate('profile'); // Navigate to profile screen
   };
 
   return (

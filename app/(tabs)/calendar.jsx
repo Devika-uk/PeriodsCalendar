@@ -12,7 +12,7 @@ const MainPage = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Header title="Your Cycle" />
+       
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.summaryContainer}>
             <Text style={styles.summaryTitle}>Cycle Summary</Text>

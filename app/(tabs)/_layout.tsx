@@ -10,30 +10,36 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 
 import {
   BottomTabNavigationOptions,
-  createBottomTabNavigator,a
+  createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
 
 import Calendar from "./calendar";
 import Health from "./health";
-import Test from "./test";
+import Test from "./PregnancyGuidanceScreen";
+import Profile from "./profile";
 
 const Tabs = createBottomTabNavigator();
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  const screenOptions: BottomTabNavigationOptions = {
-    tabBarShowLabel: true,
-    tabBarActiveTintColor: Colors[colorScheme ?? "light"].tabIconSelected,
-    tabBarInactiveTintColor: Colors[colorScheme ?? "light"].tabIconDefault,
-    headerShown: false,
-    tabBarButton: HapticTab,
-    tabBarBackground: TabBarBackground,
-    tabBarStyle: Platform.select({
-      ios: { position: "absolute" },
-      default: {},
-    }),
-  };
+const screenOptions: BottomTabNavigationOptions = {
+  tabBarShowLabel: true,
+  tabBarActiveTintColor: Colors[colorScheme ?? "light"].tabIconSelected,
+  tabBarInactiveTintColor: Colors[colorScheme ?? "light"].tabIconDefault,
+  headerShown: false,
+  tabBarButton: HapticTab,
+  tabBarBackground: TabBarBackground,
+  tabBarStyle: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    elevation: 0,
+    borderTopWidth: 0,
+    backgroundColor: 'white',
+  },
+};
 
   return (
     <SafeAreaProvider>
@@ -96,6 +102,21 @@ export default function TabLayout() {
             ),
           }}
         />
+        <Tabs.Screen
+  name="profile"
+  component={Profile}
+  options={{
+    title: "Profile",
+  
+    tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons
+                name="meditation"
+                size={28}
+                color={color}
+              />
+            ),
+  }}
+/>
       </Tabs.Navigator>
     </SafeAreaProvider>
   );
