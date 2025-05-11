@@ -10,7 +10,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 
 import {
   BottomTabNavigationOptions,
-  createBottomTabNavigator,
+  createBottomTabNavigator,a
 } from "@react-navigation/bottom-tabs";
 
 import Calendar from "./calendar";
